@@ -26,9 +26,9 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 |:---------------------:|:-------------|
 |**`foldl`:**| Starts from the leftmost element, takes a combining function, an initial value, and moves toward the right. This is bad news bears for infinite lists, since you'll have a non-terminating situation on your hands. |
 | **`foldr`:** | Starts from the rightmost element, takes a combining function, an initial value, and moves left. This terminates when operating on infinite lists. |
-| **`foldl1`:** | Like `foldl`, but you don't need to provide an explicit starting value. They assume the first element of the list to be the starting value and then start the fold with the element next to it. |
-| **`foldr1`:**| Like `foldl1`, but the default starting value will be the last element, and the fold will move leftward. |
-| **`foldl'`:**| Like `foldl1`, but strict in the accumulator. |
+| **`foldl1`:** | Like `foldl`, but you don't need to provide an explicit starting value. They assume the first element of the list to be the starting value and then start the fold with the element next to it. This requires non-empty inputs and will otherwise throw an exception. |
+| **`foldr1`:**| Like `foldl1`, but the default starting value will be the last element, and the fold will move leftward. This requires non-empty inputs and will otherwise throw an exception. |
+| **`foldl'`:**| Like `foldl`, but strict in the accumulator. |
 
 ![image](https://user-images.githubusercontent.com/875834/56461823-ffce7a00-6386-11e9-8aa1-52a125f00cf8.png)
 
