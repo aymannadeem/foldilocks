@@ -25,15 +25,14 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 | **`foldl1`:** | Like `foldl`, but you don't need to provide an explicit starting value. They assume the first element of the list to be the starting value and then start the fold with the element next to it. |
 | **`foldr1`:**| Like `foldl1`, but the default starting value will be the last element, and the fold will move leftward. |
 
-![image](https://user-images.githubusercontent.com/875834/56447997-d3a8ef80-62d9-11e9-9005-42df2258fd22.png)
-![image](https://user-images.githubusercontent.com/875834/56448065-5762dc00-62da-11e9-8bb2-db30732e6859.png)
+![image](https://user-images.githubusercontent.com/875834/56449128-c85ac180-62e3-11e9-81df-ffec6201fb1d.png)
 
-#### Why folds are good
+### Why folds are good
 
 - **Maintainability:** Abstracting away the recursion part allows us to decouple the logic of _what_ we are doing from _how_ we do it. Instead of appearing explicitly in our code, the recursion part is neatly packaged up and handled by a higher-order function. This is more idiomatic. The intent is expressed more clearly and focus is on what the function achieves, without introducing the potential of getting bogged down in the how the recursion works, and introducing possible errors.
 - **Performance:** GHC is relatively reluctant to inline manually-written recursive code, but it is very happy to inline `foldl'` and `foldr`.
 
-#### Why folds are bad
+### Why folds are bad
 
 - **Confusing to read:** Despite their benefits, folds are not straightforward. They can introduce a lot of cognitive overhead. While they provide a neat logical separation and a clever way to express code more concisely, they can also reduce the clarity given by explicit recursion. The recursive part is now opaque and handled by this abstraction.
 - **Confusing to write:** Folds are also difficult to write. Often times, it isn't immediately clear whether something will be a left or right fold, and whether you need to provide an initial value.
@@ -262,11 +261,14 @@ foldl' f z []     = z
 foldl' f z (x:xs) = let val = f z x in seq val (foldl f val xs)
 ```
 
-### Conclusion
+![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
 
-Coming to Haskell from an imperative, object-oriented world—folds were really my first exposure to explicitly thinking about recursion in different ways. Even if recursive computation took a different shape in my head, it was always expressed in other languages in this one way... not multiple ways
+## Conclusion
 
-If you're a beginner to Haskell, my hope is that this illuminated the mystical path of enlightenment on your way to becoming a fold Sufi.
+If you're a beginner to Haskell, my hope is that this helped illuminate the mystical path toward enlightenment on your way to becoming a fold Sufi.
 
+## Exercises
+
+As an exercise, implement the following functions using folds. Solutions are provided here. 
 
 https://wiki.haskell.org/Foldr_Foldl_Foldl'
