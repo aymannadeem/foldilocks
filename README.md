@@ -8,7 +8,7 @@ Instead of doing frustrating mental gymnastics to determine which fold is most a
 
 ## Table of Contents
 1. [What are folds](#what-are-folds)
-2. [A structured approach to choosing folds](#structured-approach-to-choosing-folds)
+2. [A structured approach to choosing folds](#a-structured-approach-to-choosing-folds)
 
 ## What are Folds
 For the sake of brevity, I'll keep an introduction to folds short and will avoid going into depth. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function you wish to refactor.
