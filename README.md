@@ -237,8 +237,6 @@ removeUnderscore = foldr appender ""
         appender c cs = c : cs
 ```
 
-![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
-
 ## Conclusion (and homework!)
 
 Fast feedback loops from the REPL help check your intuition. This is especially valuable when working with folds. If you're a beginner to Haskell, my hope is that this helped illuminate the mystical and sometimes elusive path toward becoming a fold Sufi.
@@ -255,3 +253,5 @@ As an exercise, implement the following recursive functions using folds. Solutio
 - `map` using `foldl`
 - Binary search tree
 - Show
+
+![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
