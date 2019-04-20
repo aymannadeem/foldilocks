@@ -1,13 +1,17 @@
 # Demystifying folds with ghci
 
 #### Folds are difficult to intuitively reason about
-Implementing folds can be tricky, brain-bending conquests in Haskell. This is all the more challenging in less straightforward applications such as writing Template Haskell, since it requires having to mentally keep track of associativity as it relates to three dimensions: 1) the code you write, 2) the code you generate at compile-time, and 3) the shape of your input. While folds appear deceptively simple, they can be difficult to work with in practice. Without a structured way to fact-check your intuition, it can be easy to overlook subtle intricacies, get confused, naively choose a left fold when your problem required a right fold. Re-thinking original assumptions can cost you precious time, and leave you feeling like a dysfunctional baby. Luckily, there is a more methodical way to navigate these handy and useful higher-order functions.
+Implementing folds can be tricky, brain-bending conquests in Haskell. This becomes all the more challenging in domains where associativity and strictness properties are less straightforward, such as when writing Template Haskell. While folds appear deceptively simple, they can be confusing to work with in practice. Without a structured way to fact-check your intuition, it can be easy to overlook subtle intricacies, naively choose a left fold when your problem required a right fold, etc. Re-thinking original assumptions costs precious time and can leave you feeling like a dysfunctional baby. Luckily, there is a more methodical way to navigate these handy and useful higher-order functions.
 
 #### Using GHCi: a structured approach to implementing folds
-Instead of doing frustrating mental gymnastics to determine which fold is most appropriate for your problem, you can lean on ghci. My teammate Patrick introduced me to a systematic framework that uses REPL trial-and-error to take the pressure off my brain. It was a game-changer for my workflow, so I thought I'd pass along this bit of wisdom to potentially guide other dysfunctional Haskell babies trying to navigate the higher-order function world.
+Instead of doing frustrating mental gymnastics to determine which fold is most appropriate for your problem, you can lean on ghci. My teammate Patrick introduced me to a systematic framework which involves using some [basic heuristics](https://wiki.haskell.org/Foldr_Foldl_Foldl') in conjunction with REPL trial-and-error to alleviate the cognitive load. It was a game-changer for me, so I thought I'd pass along this bit of wisdom to potentially guide other dysfunctional Haskell babies trying to navigate folds.
+
+## Table of Contents
+1. [What are folds](#what-are-folds)
+2. [A structured approach to choosing folds](#structured-folding)
 
 ## What are Folds
-For the sake of brevity, I'll keep an introduction to folds short and will avoid going into depth. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function.
+For the sake of brevity, I'll keep an introduction to folds short and will avoid going into depth. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function you wish to refactor.
 
 #### Brief description of folds
 "Folds" refer to a group of higher-order functions that operate over a data structure that can be folded (think lists, trees, etc.), and collapse them into another data structure or final result as the return value. These functions are provided by the [`Foldable`](https://wiki.haskell.org/Foldable_and_Traversable#Foldable) type class.
@@ -24,8 +28,9 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 | **`foldr`:** | Starts from the rightmost element, takes a combining function, an initial value, and moves left. This terminates when operating on infinite lists. |
 | **`foldl1`:** | Like `foldl`, but you don't need to provide an explicit starting value. They assume the first element of the list to be the starting value and then start the fold with the element next to it. |
 | **`foldr1`:**| Like `foldl1`, but the default starting value will be the last element, and the fold will move leftward. |
+| **`foldl'`:**| Like `foldl1`, but strict in the accumulator. |
 
-![image](https://user-images.githubusercontent.com/875834/56449128-c85ac180-62e3-11e9-81df-ffec6201fb1d.png)
+![image](https://user-images.githubusercontent.com/875834/56461823-ffce7a00-6386-11e9-8aa1-52a125f00cf8.png)
 
 ### Why folds are good
 
@@ -37,13 +42,13 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 - **Confusing to read:** Despite their benefits, folds are not straightforward. They can introduce a lot of cognitive overhead. While they provide a neat logical separation and a clever way to express code more concisely, they can also reduce the clarity given by explicit recursion. The recursive part is now opaque and handled by this abstraction.
 - **Confusing to write:** Folds are also difficult to write. Often times, it isn't immediately clear whether something will be a left or right fold, and whether you need to provide an initial value.
 
-## A structured approach to folding
+## A structured approach to choosing folds
 
 The recipe for using folds in your function more or less to:
 1. Know the type signature of the function you want to write. This will give you an understanding of the data structure you wish to process, and the output you wish to produce.
 2. Optional step: think through how to determine something as an explicit function (this step may be omitted, but I find it helpful to do the explicit thing first, before using a higher-order function to handle it).
-3. Use intuition to determine how your input will be processed. Using the type-signature of your function, think through _how_ you will operate over your data structure. Will you be
-4. Use ghci: test your assumptions by feeding dummy inputs to the REPL. This will quickly confirm or deny your intution.
+3. Use [these heuristics](https://wiki.haskell.org/Foldr_Foldl_Foldl') to hypothesize how your input will be processed.
+4. Use ghci: test your assumptions by using your knowledge of types, the expected result and feed some dummy inputs to the REPL. This will quickly confirm or deny whether your hypothesis was correct.
 
 ### Example with ghci
 
@@ -51,23 +56,23 @@ The example I will use to illustrate this practice comes directly from code I re
 
 #### Refactoring: use folds instead of explicit recursion
 
-Consider this function I wrote to remove underscores from input strings:
+Consider this function that takes a string input in `snake_case`, remove underscores from input strings, and outputs `dromedaryCase`:
 
 ```Haskell
--- Helper function to remove underscores from output of data type names (ab_cd -> abCd)
+-- Helper function to remove underscores from output of data type names (hello_world -> helloWorld)
 removeUnderscore :: String -> String
 removeUnderscore ('_':cs) = initUpper (removeUnderscore cs)
 removeUnderscore (c:cs) = c : removeUnderscore cs
 removeUnderscore "" = ""
 ```
 
-It is expressed here with an explicit recursive call. Off hand, we know that the data structure we wish to process is a list (since a `String` is a list of `Char`). Because we process the string from left to right, my intuition leads me to assume we want to use `foldl` (start on the left, proceed right). More specifically, my guess is that we want to use `foldl'` since it uses strict application. Let's explore this intuition by using ghci to check whether or not it holds.
+It is expressed here with an explicit recursive call. Off hand, we know that the data structure we wish to process is a list (since a `String` is a list of `Char`). Because we process the string from left to right, my intuition leads me to assume we want to use `foldl` (start on the left, proceed right). In fact, I think what we want is actually `foldl'` since it uses strict application and gives us better performance. Our list will certainly be finite, so this seems like a safe guess. Let's explore this intuition by using ghci to check whether or not it holds.
 
 #### Examining types with ghci
 
 The strategy can be broken down into this general recipe:
-1. Start at the type level, and find what signature you want with type applications
-2. Switch to the value level, and find what values you want with type holes
+1. Start at the type level, and find what signature you want with type applications.
+2. Switch to the value level, and find what values you want using type holes.
 
 According to its type signature, `foldl` takes a function that takes two different types, `b -> a -> b`, a value `b`, and folds over container `t` consisting of `a`:
 
@@ -139,26 +144,25 @@ If we use type applications once again to specialize for lists:
 (:) @Char :: Char -> [Char] -> [Char]
 ```
 
-So specially, passing `:` to `foldl` doesn't type check because `(:) :: Char -> String -> String`, which doesn’t match `(b -> a -> b)`. There are two functions of type `String -> Char -> String`:
+Passing `:` to `foldl` doesn't type check because `(:) :: Char -> String -> String`, which doesn’t match `(b -> a -> b)`. There are two functions of type `String -> Char -> String`:
 1. one is `\a b -> b : a` (which is synonymous with `flip (:)`)
 2. The other is `\str char -> str ++ [char]`
 
-The second one is `O(n)`, and since we run it `n` types it would make the function `O(n^2)`, therefore the first one is the one we want, so let's use `flip (:)` instead:
-
+The second option is O(n), and since we run it `n` types it would make the function O(n^2), therefore the first one is the one we want, so let's use `flip (:)` instead:
 
 ```  
 >>> :t foldl' (flip (:))
 foldl' (flip (:)) :: Foldable t => [a] -> t a -> [a]
 ```
 
-Ok, so far so good! Let's test with our edge case:
+Ok, so far so good! Let's test with our edge case, the empty string:
 
 ```
 >>> :t foldl' (flip (:)) ""
 foldl' (flip (:)) "" :: Foldable t => t Char -> [Char]
 ```
 
-Now, just as we used type applications earlier, let's do so with the `flip (:)`
+Now, just as we used type applications to test with earlier, let's do so with the `flip (:)`
 
 ```
 >>> :t foldl' @[] (flip (:)) ""
@@ -173,8 +177,6 @@ This gives us something partially applied, because we have only provided the sta
 ```
 
 Oops! That reversed our list, and that's not what we want! We're doing things in the wrong order. Turns out, it is _not_ `foldl` we want, but `foldr`. Let's run through the same dance with `foldr`:
-
-
 
 ```
 >>> :t foldr
@@ -211,7 +213,20 @@ Success!
 
 #### Using the correct fold in our function:
 
+`foldr` takes a binary function, the starting value, and the data structure. We can define this function in a `where` clause:
 
+```Haskell
+-- Helper function to remove underscores from output of data type names
+removeUnderscore :: String -> String
+removeUnderscore xs = foldr appender "" xs
+  where appender :: Char -> String -> String
+        appender '_' cs = initUpper cs
+        appender c cs = c : cs
+```
+
+Notice that this function, which we've named "appender" only cares about one value at a time. The `foldr` will handle the task of applying this function recursively to all elements of the list.
+
+If we [eta-reduce](https://wiki.haskell.org/Eta_conversion) it, we get:
 
 ```Haskell
 -- Helper function to remove underscores from output of data type names
@@ -222,53 +237,21 @@ removeUnderscore = foldr appender ""
         appender c cs = c : cs
 ```
 
-```
--- foldr :: (a -> b -> b) -> b -> t a -> b
--- foldr :: (a -> b -> b) -> b -> [a] -> b
--- foldr :: (Char -> String -> String) -> String -> [Char] -> String
-```
-
-
-## Fun fact: strictness
-
-#### Why no `foldr'` exists
-
-There is no `foldr'`. It displays the correct strictness properties by construction.
-
-```Haskell
-foldl :: (b -> a -> b) -> b -> [a] -> b
-foldl f z []     = z
-foldl f z (x:xs) = foldl f (f z x) xs
-```
-
-```
-foldr :: (a -> b -> b) -> b -> [a] -> b
-foldr f z []     = z
-foldr f z (x:xs) = f x (foldr f z xs)
-```
-
-Note that when we fold to the right, we call `f` in the recursive case
-and when we fold left, we call `foldl`
-both of these are good and valid. the problem is in `foldl`. because haskell is lazy, it doesn’t evaluate that call to `(f z x)` until it absolutely needs to
-so that means for each stage of the fold, you’ll have a thunk representing the unevaluated result of `f z x`. then you recurse into `foldl` again, and if you hit the recursive case, you’ll have another call to `f z x`
-except in this case that `z` depends on the previous call to `f z x`, and it hasn’t been evaluated, so that means we have another thunk taking up stack space
-and so on and so forth
-so your stack will grow in proportion to how many items there are in the list. that is Bad
-GHC isn’t smart enough to look through all the recursion and be like “oh hey we can make this strict and save a bunch of space”
-`foldl'` is the same thing, except you use the `seq` primitive to ensure that `f z x` is evaluated to WHNF before you recurse
-```foldl' :: (b -> a -> b) -> b -> [a] -> b
-foldl' f z []     = z
-foldl' f z (x:xs) = let val = f z x in seq val (foldl f val xs)
-```
-
 ![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
 
-## Conclusion
+## Conclusion (and homework!)
 
-If you're a beginner to Haskell, my hope is that this helped illuminate the mystical path toward enlightenment on your way to becoming a fold Sufi.
+Fast feedback loops from the REPL help check your intuition. This is especially valuable when working with folds. If you're a beginner to Haskell, my hope is that this helped illuminate the mystical and sometimes elusive path toward becoming a fold Sufi.
 
-## Exercises
+As an exercise, implement the following recursive functions using folds. Solutions are provided here.
 
-As an exercise, implement the following functions using folds. Solutions are provided here. 
-
-https://wiki.haskell.org/Foldr_Foldl_Foldl'
+- `max :: (Ord a) => [a] -> a`
+- `reverse' :: [a] -> [a]`
+- `product' :: (Num a) => [a] -> a`
+- `filter' :: (a -> Bool) -> [a] -> [a]`
+- `head' :: [a] -> a`
+- `last' :: [a] -> a`
+- `map` using `foldr`
+- `map` using `foldl`
+- Binary search tree
+- Show
