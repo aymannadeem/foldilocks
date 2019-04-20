@@ -241,7 +241,7 @@ removeUnderscore = foldr appender ""
 
 Fast feedback loops from the REPL help check your intuition. This is especially valuable when working with folds. If you're a beginner to Haskell, my hope is that this helped illuminate the mystical and sometimes elusive path toward becoming a fold Sufi.
 
-As an exercise, implement the following recursive functions using folds. Solutions are provided here.
+As an exercise, implement the following recursive functions using folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions).
 
 - `max :: (Ord a) => [a] -> a`
 - `reverse' :: [a] -> [a]`
