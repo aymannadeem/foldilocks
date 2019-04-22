@@ -31,6 +31,10 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 | **`foldl'`:**| Like `foldl`, but strict in the accumulator. |
 
 ![image](https://user-images.githubusercontent.com/875834/56535678-4ad4c280-652a-11e9-99bb-710de7cb3e1a.png)
+_visualization of left vs. right folds_
+
+![image](https://user-images.githubusercontent.com/875834/56535989-f7af3f80-652a-11e9-91ef-8651d11c2aba.png)
+_Real life photograph of the runtime exception that occurs when you use foldl on finite lists_
 
 ### Why folds are good
 
