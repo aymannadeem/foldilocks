@@ -34,6 +34,8 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 
 _visualization of left vs. right folds_
 
+
+
 ![image](https://user-images.githubusercontent.com/875834/56535989-f7af3f80-652a-11e9-91ef-8651d11c2aba.png)
 
 _Real life photograph of the runtime exception that occurs when you use foldl on finite lists_
