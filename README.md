@@ -30,7 +30,7 @@ The Foldable class defines many functions. I will limit my discussion to the fou
 | **`foldr1`:**| Like `foldl1`, but the default starting value will be the last element, and the fold will move leftward. This requires non-empty inputs and will otherwise throw an exception. |
 | **`foldl'`:**| Like `foldl`, but strict in the accumulator. |
 
-![image](https://user-images.githubusercontent.com/875834/56461823-ffce7a00-6386-11e9-8aa1-52a125f00cf8.png)
+![image](https://user-images.githubusercontent.com/875834/56535678-4ad4c280-652a-11e9-99bb-710de7cb3e1a.png)
 
 ### Why folds are good
 
