@@ -237,7 +237,7 @@ removeUnderscore = foldr appender ""
         appender c cs = c : cs
 ```
 
-## Conclusion (and homework!)
+## Conclusion (and homework! 🤓)
 
 Fast feedback loops from the REPL help check your intuition. This is especially valuable when working with folds. If you're a beginner to Haskell, my hope is that this helped illuminate the mystical and sometimes elusive path toward becoming a fold Sufi.
 
