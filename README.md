@@ -218,7 +218,7 @@ Passing `:` to `foldl` doesn't type check because `(:) :: Char -> String -> Stri
 1. one is `\a b -> b : a` (which is synonymous with `flip (:)`)
 2. The other is `\str char -> str ++ [char]`
 
-The second option is O(n), and since we run it `n` types it would make the function O(n^2), therefore the first one is the one we want, so let's use `flip (:)` instead:
+The second option is O(n), and since we run it `n` times it would make the function O(n^2), therefore the first one is the one we want, so let's use `flip (:)` instead:
 
 ```  
 >>> :t foldl' (flip (:))
