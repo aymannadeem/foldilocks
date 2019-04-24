@@ -56,13 +56,13 @@ If we write a regular-schmegular manually recursive function, our definition wil
 ```Haskell
 sumManual :: (Num a) => [a] -> a
 sumManual [] = 0
-sumManual (x:xs) = x + sumMan xs
+sumManual (x:xs) = x + sumManual xs
 ```
 
 This behaves as expected in ghci:
 
 ```
->>> sumMan [1,2,3,4,5]
+>>> sumManual [1,2,3,4,5]
 15
 ```
 
@@ -90,7 +90,7 @@ sumFold = foldl (+) 0
 Cool! I can read this function without being exposed to its recursive guts. Let's test its behavior:
 
 ```
->>> sumMan [1,2,3,4,5]
+>>> sumFold [1,2,3,4,5]
 15
 ```
 
