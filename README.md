@@ -57,7 +57,9 @@ The recipe for using folds in your function more or less to:
 
 ### Example with ghci
 
-The example I will use to illustrate this practice comes directly from code I refactored in a library I'm building to deserialize JSON ASTs and auto-generate Haskell code using Template Haskell.
+The example I will use to illustrate this practice comes directly from code I refactored in a library I'm building to deserialize JSON ASTs and auto-generate Haskell code using Template Haskell. Rather than taking a boring journey through ghci errors, I'm going to tell a story, the fairytale of Foldilocks and the three folds.
+
+![image](https://user-images.githubusercontent.com/875834/56625159-091b4900-660a-11e9-8955-6d5aa72d383a.png)
 
 #### Refactoring: use folds instead of explicit recursion
 
