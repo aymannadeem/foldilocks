@@ -95,6 +95,7 @@ Cool! I can read this function without being exposed to its recursive guts.
 
 - **Maintainability:** Abstracting away the recursion part allows us to decouple the logic of _what_ we are doing from _how_ we do it. Instead of appearing explicitly in our code, the recursion part is neatly packaged up and handled by a higher-order function. This is more idiomatic. The intent is expressed more clearly and focus is on what the function achieves, without introducing the potential of getting bogged down in the how the recursion works, and introducing possible errors.
 - **Performance:** GHC is relatively reluctant to inline manually-written recursive code, but it is very happy to inline `foldl'` and `foldr`.
+- **Folds are generic:** Folds are generic and can work over any container type (such a list, binary tree, etc.) This gives us a more general expression we can specialize for _our_ particular container.
 
 ### Why folds are bad
 
