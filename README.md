@@ -41,7 +41,7 @@ _Real life photograph of the runtime exception that occurs when you use foldl on
 
 ## A simple example
 
-Before I show you how to choose the right fold, here's a small example that demonstrates the basic premise:
+Before I show you how to choose the right fold, here's a small example that demonstrates the way folds are used to abstract away recursion.
 
 ### Translating manual recursion to fold operations
 
