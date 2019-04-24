@@ -13,7 +13,7 @@ Instead of doing frustrating mental gymnastics to determine which fold is most a
 4. [A structured approach to choosing folds](#a-structured-approach-to-choosing-folds)
 
 ## What are Folds
-For the sake of brevity, I'll keep an introduction to folds short and will avoid going into depth. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function you wish to refactor.
+For the sake of brevity, I'll keep an introduction to folds short and shallow. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function you wish to refactor.
 
 #### Brief description of folds
 "Folds" refer to a group of higher-order functions that operate over a data structure that can be folded (think lists, trees, etc.), and collapse them into another data structure or final result as the return value. These functions are provided by the [`Foldable`](https://wiki.haskell.org/Foldable_and_Traversable#Foldable) type class.
