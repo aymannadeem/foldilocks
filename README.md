@@ -115,7 +115,7 @@ The recipe for using folds in your function more or less to:
 
 The example I will use to illustrate this practice comes directly from code I refactored in a library I'm building to deserialize JSON ASTs and auto-generate Haskell code using Template Haskell. Rather than taking a boring journey through ghci errors, I'm going to tell the story of Foldilocks and the three folds. 
 
-![image](https://user-images.githubusercontent.com/875834/56625159-091b4900-660a-11e9-8955-6d5aa72d383a.png)
+![image](https://user-images.githubusercontent.com/875834/56687721-f013a600-66a4-11e9-8315-75d8e48ee01f.png)
 
 Foldilocks is uncovering the differences between three folds: `foldr`, `foldl` and `foldl'`. Let's walk through how she figures out how to find the fold that's _juuuuust_ right.
 
