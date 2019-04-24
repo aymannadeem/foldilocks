@@ -56,13 +56,13 @@ If we write a regular-schmegular manually recursive function, our definition wil
 ```Haskell
 sumManual :: (Num a) => [a] -> a
 sumManual [] = 0
-sumManual (x:xs) = x + sumMan xs
+sumManual (x:xs) = x + sumManual xs
 ```
 
 This behaves as expected in ghci:
 
 ```
->>> sumMan [1,2,3,4,5]
+>>> sumManual [1,2,3,4,5]
 15
 ```
 
@@ -90,7 +90,7 @@ sumFold = foldl (+) 0
 Cool! I can read this function without being exposed to its recursive guts. Let's test its behavior:
 
 ```
->>> sumMan [1,2,3,4,5]
+>>> sumFold [1,2,3,4,5]
 15
 ```
 
@@ -218,7 +218,7 @@ Passing `:` to `foldl` doesn't type check because `(:) :: Char -> String -> Stri
 1. one is `\a b -> b : a` (which is synonymous with `flip (:)`)
 2. The other is `\str char -> str ++ [char]`
 
-The second option is O(n), and since we run it `n` types it would make the function O(n^2), therefore the first one is the one we want, so let's use `flip (:)` instead:
+The second option is O(n), and since we run it `n` times it would make the function O(n^2), therefore the first one is the one we want, so let's use `flip (:)` instead:
 
 ```  
 >>> :t foldl' (flip (:))
