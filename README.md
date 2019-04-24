@@ -160,7 +160,7 @@ Switching back to our REPL, we can use [type applications](https://gitlab.haskel
 foldl' @[] :: (b -> a -> b) -> b -> [a] -> b
 ```
 
-We can add in our second parameter, a `String`:
+This first `[]` application is to handle the `Foldable` constraint. It abides by the rule that this needs to be a structure we can fold over. We can add in our second parameter, a `String`:
 
 ```
 >>> :t foldl' @[] @String
