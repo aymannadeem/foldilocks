@@ -318,7 +318,7 @@ As an exercise, implement the following recursive functions using folds. [Soluti
 - `filter' :: (a -> Bool) -> [a] -> [a]`
 - `head' :: [a] -> a`
 - `last' :: [a] -> a`
-- `map` using `foldr`
-- `map` using `foldl`
+- `map :: (a -> b) -> [a] -> [b]` using `foldr`
+- `map :: (a -> b) -> [a] -> [b]` using `foldl`
 - Binary search tree
 - Show
