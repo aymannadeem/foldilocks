@@ -243,7 +243,7 @@ This gives us something partially applied, because we have only provided the sta
 
 Oops! That reversed our list, and that's not what we want! We're doing things in the wrong order! Foldilocks' nemesis, Foldemort, appears and tells you this is the incorrect fold!
 
-![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
+![image](https://user-images.githubusercontent.com/875834/56685558-331f4a80-66a0-11e9-925b-ed6c2aba0200.png)
 
 Turns out, it is _not_ `foldl` we want, but `foldr`. Let's run through the same dance with `foldr`:
 
