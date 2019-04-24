@@ -312,13 +312,13 @@ Fast feedback loops from the REPL help check your intuition. This is especially 
 
 As an exercise, implement the following recursive functions using folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions).
 
-- `max :: (Ord a) => [a] -> a`
-- `reverse' :: [a] -> [a]`
-- `product' :: (Num a) => [a] -> a`
-- `filter' :: (a -> Bool) -> [a] -> [a]`
-- `head' :: [a] -> a`
-- `last' :: [a] -> a`
-- `map :: (a -> b) -> [a] -> [b]` using `foldr`
-- `map :: (a -> b) -> [a] -> [b]` using `foldl`
-- Binary search tree
-- Show
+1. `max :: (Ord a) => [a] -> a`
+2. `reverse' :: [a] -> [a]`
+3. `product' :: (Num a) => [a] -> a`
+4. `filter' :: (a -> Bool) -> [a] -> [a]`
+5. `head' :: [a] -> a`
+6. `last' :: [a] -> a`
+7. `map :: (a -> b) -> [a] -> [b]` using `foldr`
+8. `map :: (a -> b) -> [a] -> [b]` using `foldl`
+9. Binary search tree using `foldr`
+10. Binary search tree using `foldMap`
