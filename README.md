@@ -8,7 +8,9 @@ Instead of doing frustrating mental gymnastics to determine which fold is most a
 
 ## Table of Contents
 1. [What are folds](#what-are-folds)
-2. [A structured approach to choosing folds](#a-structured-approach-to-choosing-folds)
+2. [A simple example](#a-simple-example)
+3. [Pros and Cons of folds](#pros-and-cons-of-folds)
+4. [A structured approach to choosing folds](#a-structured-approach-to-choosing-folds)
 
 ## What are Folds
 For the sake of brevity, I'll keep an introduction to folds short and will avoid going into depth. For more background, [read this wiki](https://wiki.haskell.org/Fold). This post will instead focus on demonstrating how to figure out _which_ fold is most suitable for a given function you wish to refactor.
@@ -37,6 +39,58 @@ _Visualization of left vs. right folds:_
 _Real life photograph of the runtime exception that occurs when you use foldl on finite lists:_
 ![image](https://user-images.githubusercontent.com/875834/56536293-b4a19c00-652b-11e9-98af-c2cec20b877b.png)
 
+## A simple example
+
+Before I show you how to choose the right fold, here's a small example that demonstrates the basic premise:
+
+### Translating manual recursion to fold operations
+
+Replacing manual recursion with folds is a frequently occurring refactoring opportunity in Haskell code bases (though whether or not it's the _right_ decision is a discussion that appears [later in this tutorial](#why-folds-are-good)). This use-case, of rewriting a manually recursive function in terms of folds, is common and important enough that I will teach it to you. Let's start with a super simple function you were introduced to in grade school: `sum`!
+
+#### Sum with manual recursion
+
+We would like to add up all of the values in this list: `[1,2,3,4,5]`.
+
+If we write a regular-schmegular manually recursive function, our definition will look something like this:
+
+```Haskell
+sumManual :: (Num a) => [a] -> a
+sumManual [] = 0
+sumManual (x:xs) = x + sumMan xs
+```
+
+This behaves as expected in ghci:
+
+```
+>>> sumMan [1,2,3,4,5]
+15
+```
+
+We have the base case of the empty list, `[]`, and the recursive case. Turns out, the definition of `foldl'` contains all of that sweet recursive machinery needed to power our manual `sum` function:
+
+```Haskell
+foldl' :: (b -> a -> b) -> b -> t a -> b
+foldl1' f (x:xs)         =  foldl' f x xs
+foldl1' _ []             =  errorEmptyList "foldl1'"
+```
+
+This means we can take `foldl'` and just plug it in to our `sum` implementation.
+
+#### Sum using folds
+
+We know from the above source that `foldl'` takes some binary function `f` with the signature `(b -> a -> b)` (in our case `+` since we're summing), a starting value `b` (in our case, `0`), and some structure `t a` (in our case a list `[a]`).
+
+This is how we can rewrite `sum` using `foldl'`:
+
+```Haskell
+sumFold :: (Num a) => [a] -> a
+sumFold = foldl (+) 0
+```
+
+Cool! I can read this function without being exposed to its recursive guts.
+
+## Pros and Cons of folds
+
 ### Why folds are good
 
 - **Maintainability:** Abstracting away the recursion part allows us to decouple the logic of _what_ we are doing from _how_ we do it. Instead of appearing explicitly in our code, the recursion part is neatly packaged up and handled by a higher-order function. This is more idiomatic. The intent is expressed more clearly and focus is on what the function achieves, without introducing the potential of getting bogged down in the how the recursion works, and introducing possible errors.
@@ -61,7 +115,7 @@ The example I will use to illustrate this practice comes directly from code I re
 
 ![image](https://user-images.githubusercontent.com/875834/56625159-091b4900-660a-11e9-8955-6d5aa72d383a.png)
 
-Foldilocks is uncovering the differences between three folds: `foldr`, `foldl` and `foldl'`. Let's walk through how she figures out how to find the fold that's _just_ right.
+Foldilocks is uncovering the differences between three folds: `foldr`, `foldl` and `foldl'`. Let's walk through how she figures out how to find the fold that's _juuuuust_ right.
 
 #### Refactoring: use folds instead of explicit recursion
 
