@@ -310,15 +310,18 @@ removeUnderscore = foldr appender ""
 
 Fast feedback loops from the REPL help check your intuition. This is especially valuable when working with folds. If you're a beginner to Haskell, my hope is that this helped illuminate the mystical and sometimes elusive path toward becoming a fold Sufi.
 
-As an exercise, implement the following recursive functions using folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions).
+#### Exercises 
+
+Implement the following recursive functions with folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions).
 
 1. `max :: (Ord a) => [a] -> a`
 2. `reverse' :: [a] -> [a]`
-3. `product' :: (Num a) => [a] -> a`
-4. `filter' :: (a -> Bool) -> [a] -> [a]`
-5. `head' :: [a] -> a`
-6. `last' :: [a] -> a`
-7. `map :: (a -> b) -> [a] -> [b]` using `foldr`
-8. `map :: (a -> b) -> [a] -> [b]` using `foldl`
-9. `Foldable` instance for a Binary search tree using `foldr`
-10. `Foldable` instance for a Binary search tree using `foldMap`
+3. `elem' :: (Eq a) => a -> [a] -> Bool`
+4. `product' :: (Num a) => [a] -> a`
+5. `filter' :: (a -> Bool) -> [a] -> [a]`
+6. `head' :: [a] -> a`
+7. `last' :: [a] -> a`
+8. `map :: (a -> b) -> [a] -> [b]` using `foldr`
+9. `map :: (a -> b) -> [a] -> [b]` using `foldl`
+10. `Foldable` instance for a Binary search tree using `foldr`
+11. `Foldable` instance for a Binary search tree using `foldMap`
