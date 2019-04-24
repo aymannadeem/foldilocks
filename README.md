@@ -94,13 +94,14 @@ Cool! I can read this function without being exposed to its recursive guts.
 ### Why folds are good
 
 - **Maintainability:** Abstracting away the recursion part allows us to decouple the logic of _what_ we are doing from _how_ we do it. Instead of appearing explicitly in our code, the recursion part is neatly packaged up and handled by a higher-order function. This is more idiomatic. The intent is expressed more clearly and focus is on what the function achieves, without introducing the potential of getting bogged down in the how the recursion works, and introducing possible errors.
-- **Performance:** GHC is relatively reluctant to inline manually-written recursive code, but it is very happy to inline `foldl'` and `foldr`.
+- **Performance:** GHC is relatively reluctant to inline manually-written recursive code, but it is very happy to inline `foldl'` and `foldr`. Additionally, the use of a fold operation can make performance issue more clear, since we can examine the performance of the function independently of how it implements its recursion.
 - **Folds are generic:** Folds are generic and can work over any container type (such a list, binary tree, etc.) This gives us a more general expression we can specialize for _our_ particular container.
 
 ### Why folds are bad
 
 - **Confusing to read:** Despite their benefits, folds are not straightforward. They can introduce a lot of cognitive overhead. While they provide a neat logical separation and a clever way to express code more concisely, they can also reduce the clarity given by explicit recursion. The recursive part is now opaque and handled by this abstraction.
 - **Confusing to write:** Folds are also difficult to write. Often times, it isn't immediately clear whether something will be a left or right fold, and whether you need to provide an initial value.
+- **Performance:** Fold is inherently `O(n)*complexity_of_fold_function`. You ideally want steps of a fold to be `O(1)`, `O(log n)` or generally sublinear, so there are cases where folds could result in speed ups, and other cases where they could hurt your performance (though you can almost always safely turn manual recursion into a fold operation without hurting performance). 
 
 ## A structured approach to choosing folds
 
