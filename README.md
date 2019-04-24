@@ -185,7 +185,11 @@ This gives us something partially applied, because we have only provided the sta
 "dcba"
 ```
 
-Oops! That reversed our list, and that's not what we want! We're doing things in the wrong order. Turns out, it is _not_ `foldl` we want, but `foldr`. Let's run through the same dance with `foldr`:
+Oops! That reversed our list, and that's not what we want! We're doing things in the wrong order! Foldilocks' nemesis, Foldemort, appears and tells you this is the incorrect fold!
+
+![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
+
+Turns out, it is _not_ `foldl` we want, but `foldr`. Let's run through the same dance with `foldr`:
 
 ```
 >>> :t foldr
@@ -262,5 +266,3 @@ As an exercise, implement the following recursive functions using folds. [Soluti
 - `map` using `foldl`
 - Binary search tree
 - Show
-
-![image](https://user-images.githubusercontent.com/875834/56449256-fb518500-62e4-11e9-8d20-6d336e3a5105.png)
