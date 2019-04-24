@@ -113,7 +113,7 @@ Cool! I can read this function without being exposed to its recursive guts. Let'
 The recipe for using folds in your function more or less to:
 1. Know the type signature of the function you want to write. This will give you an understanding of the data structure you wish to process, and the output you wish to produce.
 2. Optional step: think through how to determine something as an explicit function (this step may be omitted, but I find it helpful to do the explicit thing first, before using a higher-order function to handle it).
-3. Use [these heuristics](https://wiki.haskell.org/Foldr_Foldl_Foldl') to hypothesize how your input will be processed.
+3. Use [these heuristics](https://wiki.haskell.org/Foldr_Foldl_Foldl') to hypothesize how your input will be processed. Protip: you almost never want to use `foldl`.
 4. Use ghci: test your assumptions by using your knowledge of types, the expected result and feed some dummy inputs to the REPL. This will quickly confirm or deny whether your hypothesis was correct.
 
 ### Example with ghci
