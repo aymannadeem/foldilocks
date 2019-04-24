@@ -323,5 +323,5 @@ Implement the following recursive functions with folds. [Solutions are provided 
 7. `last' :: [a] -> a`
 8. `map :: (a -> b) -> [a] -> [b]` using `foldr`
 9. `map :: (a -> b) -> [a] -> [b]` using `foldl`
-10. `Foldable` instance for a Binary search tree using `foldr`
-11. `Foldable` instance for a Binary search tree using `foldMap`
+10. `Foldable` instance for a binary tree using `foldr`
+11. `Foldable` instance for a binary tree using `foldMap`
