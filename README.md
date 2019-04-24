@@ -36,16 +36,16 @@ _Visualization of left vs. right folds:_
 ![image](https://user-images.githubusercontent.com/875834/56535678-4ad4c280-652a-11e9-99bb-710de7cb3e1a.png)
 
 
-_Real life photograph of the runtime exception that occurs when you use foldl on finite lists:_
+_Real life photograph of the runtime exception that occurs when you use `foldl` on finite lists:_
 ![image](https://user-images.githubusercontent.com/875834/56536293-b4a19c00-652b-11e9-98af-c2cec20b877b.png)
 
 ## A simple example
 
-Before I show you how to choose the right fold, here's a small example that demonstrates the way folds are used to abstract away recursion.
+Before I show you how to choose the correct fold using GHCi, it's important to understand how folds are used to abstract away recursion.
 
 ### Translating manual recursion to fold operations
 
-Replacing manual recursion with folds is a frequently occurring refactoring opportunity in Haskell code bases (though whether or not it's the _right_ decision is a discussion that appears [later in this tutorial](#why-folds-are-good)). This use-case, of rewriting a manually recursive function in terms of folds, is common and important enough that I will teach it to you. Let's start with a super simple function you were introduced to in grade school: `sum`!
+Rewriting manual recursion in terms of folds is a frequently occurring refactoring opportunity in Haskell code bases (though whether or not it's the _right_ decision is a discussion that appears [later in this tutorial](#why-folds-are-good)). To learn how this works, let's start with a super simple function you were introduced to in grade school: `sum`!
 
 #### Sum with manual recursion
 
@@ -87,7 +87,12 @@ sumFold :: (Num a) => [a] -> a
 sumFold = foldl (+) 0
 ```
 
-Cool! I can read this function without being exposed to its recursive guts.
+Cool! I can read this function without being exposed to its recursive guts. Let's test its behavior:
+
+```
+>>> sumMan [1,2,3,4,5]
+15
+```
 
 ## Pros and Cons of folds
 
