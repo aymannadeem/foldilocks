@@ -66,21 +66,21 @@ This behaves as expected in ghci:
 15
 ```
 
-We have the base case of the empty list, `[]`, and the recursive case. Turns out, the definition of `foldl'` contains all of that sweet recursive machinery needed to power our manual `sum` function:
+We have the base case of the empty list, `[]`, and the recursive case. Turns out, the definition of `foldl` contains all of that sweet recursive machinery needed to power our manual `sum` function:
 
 ```Haskell
-foldl' :: (b -> a -> b) -> b -> t a -> b
-foldl1' f (x:xs)         =  foldl' f x xs
-foldl1' _ []             =  errorEmptyList "foldl1'"
+foldl            :: (a -> b -> a) -> a -> [b] -> a
+foldl f z []     =  z
+foldl f z (x:xs) =  foldl f (f z x) xs
 ```
 
-This means we can take `foldl'` and just plug it in to our `sum` implementation.
+This means we can take `foldl` and just plug it in to our `sum` implementation.
 
 #### Sum using folds
 
-We know from the above source that `foldl'` takes some binary function `f` with the signature `(b -> a -> b)` (in our case `+` since we're summing), a starting value `b` (in our case, `0`), and some structure `t a` (in our case a list `[a]`).
+We know from the above source that `foldl` takes some binary function `f` with the signature `(b -> a -> b)` (in our case `+` since we're summing), a starting value `b` (in our case, `0`), and some structure `t a` (in our case a list `[a]`).
 
-This is how we can rewrite `sum` using `foldl'`:
+This is how we can rewrite `sum` using `foldl`:
 
 ```Haskell
 sumFold :: (Num a) => [a] -> a
