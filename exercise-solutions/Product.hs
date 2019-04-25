@@ -1,2 +1,2 @@
 product' :: (Num a) => [a] -> a
-product' = foldr1 (*)
+product' = foldr (*) 1
