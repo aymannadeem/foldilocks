@@ -276,10 +276,13 @@ foldr (:) "" :: Foldable t => t Char -> [Char]
 "abcd"
 ```
 
-Yay! This works! Now let's test it with the actual logic, which is to ensure we remove an underscore, and capitalize the letter succeeding the removed underscore:
+Yay! This works! Now let's test it with the actual logic, which is to ensure we remove an underscore, and capitalize the letter succeeding the removed underscore. To do so, `(:)` won't be enough on its own. We need to create a function that has all of the logic beyond simply prepending a character. 
+
+Let's create a function called `foo` in terminal that does this and test it out:
 
 ```
->>> foldr appender2 "" "ab_cd"
+>>> let foo '_' cs = initUpper cs; foo c cs = c : cs
+>>> foldr foo "" "ab_cd"
 "abCd"
 ```
 
@@ -298,7 +301,7 @@ removeUnderscore xs = foldr appender "" xs
         appender c cs = c : cs
 ```
 
-Notice that this function, which we've named "appender" only cares about one value at a time. The `foldr` will handle the task of applying this function recursively to all elements of the list.
+Notice that this function, which we've named `appender` only cares about one value at a time. The `foldr` will handle the task of applying this function recursively to all elements of the list.
 
 If we [eta-reduce](https://wiki.haskell.org/Eta_conversion) it, we get:
 
