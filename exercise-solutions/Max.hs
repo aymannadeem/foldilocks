@@ -12,3 +12,6 @@ maximum' (x:xs)
 -- Using foldr1
 maxFold :: (Ord a) => [a] -> a
 maxFold = foldr1 (\x acc -> if x > acc then x else acc)
+
+-- Run in your browser:
+-- https://repl.it/@aymannadeem/maxFold
