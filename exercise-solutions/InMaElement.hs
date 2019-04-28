@@ -14,3 +14,6 @@ elemFold y ys = foldl (\acc x -> if x == y then True else acc) False ys
 -- Idiomatic, concise, eta-reduced using foldl:
 elemFold' :: (Eq a) => a -> [a] -> Bool
 elemFold' y = foldl (\acc x -> x == y || acc) False
+
+-- Run in your browser:
+-- https://repl.it/@aymannadeem/elemFold
