@@ -1,2 +1,10 @@
+module Reverse where
+
+-- Manual Recursion
 reverse' :: [a] -> [a]
-reverse' = foldl (\acc x -> x : acc) []
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+
+-- Using foldl
+reverseFold :: [a] -> [a]
+reverseFold = foldl (\acc x -> x : acc) []
