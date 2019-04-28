@@ -320,7 +320,7 @@ Fast feedback loops from the REPL help check your intuition. This is especially 
 
 #### Exercises 
 
-Implement the following recursive functions with folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions).
+Implement the following recursive functions with folds. [Solutions are provided here](https://github.com/aymannadeem/foldilocks/tree/master/exercise-solutions). I've also created a [repl.it](https://repl.it/repls/folder/foldilocks) project for in-browser experiments.
 
 1. `max :: (Ord a) => [a] -> a`
 2. `reverse' :: [a] -> [a]`
